@@ -1,0 +1,25 @@
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+
+[acme]
+email = "paulcolusso@gmail.com"
+storage = "acme.json"
+caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+entryPoint = "https"
+  [acme.httpChallenge]
+  entryPoint = "http"
+
+[backends]
+  [backends.bot]
+    [backends.bot.servers.server1]
+      url = "localhost:5000"
+[frontends]
+  [frontends.frontend1]
+  backend = "bot"
+    [frontends.frontend1.routes.test_1]
+    rule = "Host:localhost"
