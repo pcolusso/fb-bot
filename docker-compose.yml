@@ -1,0 +1,25 @@
+version: '2'
+services:
+  bot:
+    build: .
+    restart: always
+    ports:
+      - 5000:5000
+  letsencrypt:
+    image: linuxserver/letsencrypt
+    container_name: letsencrypt
+    ports:
+      - 443:443
+    volumes:
+      - /opt/appdata/letsencrypt/config:/config
+    restart:
+      always
+    depends_on:
+      - bot
+    environment:
+      - PUID=1050
+      - PGID=1050
+      - EMAIL=some@thing.com
+      - URL=domain.tld
+      - SUBDOMAINS=sub,service1,service2
+      - TZ=Europe/London
